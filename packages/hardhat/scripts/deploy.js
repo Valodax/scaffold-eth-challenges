@@ -18,29 +18,29 @@ const R = require("ramda");
 
 This deploy script is no longer in use, but is left for reference purposes!
 */
-  const yourToken = await deploy("YourToken")
+const yourToken = await deploy("YourToken");
 
-  //Todo: deploy the vendor
-  //const vendor = await deploy("Vendor",[ yourToken.address ])
+//Todo: deploy the vendor
+//const vendor = await deploy("Vendor",[ yourToken.address ])
 
-  //console.log("\n 🏵  Sending all 1000 tokens to the vendor...\n");
-  //Todo: transfer the tokens to the vendor
-  //const result = await yourToken.transfer( vendor.address, utils.parseEther("1000") );
+//console.log("\n 🏵  Sending all 1000 tokens to the vendor...\n");
+//Todo: transfer the tokens to the vendor
+//const result = await yourToken.transfer( vendor.address, utils.parseEther("1000") );
 
-  //const stakerContract = await deploy("Staker",[ exampleExternalContract.address ]) // <-- add in constructor args like line 14 ^^^
+//const stakerContract = await deploy("Staker",[ exampleExternalContract.address ]) // <-- add in constructor args like line 14 ^^^
 
-  //console.log("\n 🤹  Sending ownership to frontend address...\n")
-  //ToDo: change address with your burner wallet address vvvv
-  //await vendor.transferOwnership( "0xD75b0609ed51307E13bae0F9394b5f63A7f8b6A1" );
+//console.log("\n 🤹  Sending ownership to frontend address...\n")
+//ToDo: change address with your burner wallet address vvvv
+//await vendor.transferOwnership( "0xD75b0609ed51307E13bae0F9394b5f63A7f8b6A1" );
 
-  //const yourContract = await ethers.getContractAt('YourContract', "0xaAC799eC2d00C013f1F11c37E654e59B0429DF6A") //<-- if you want to instantiate a version of a contract at a specific address!
-  //const secondContract = await deploy("SecondContract")
+//const yourContract = await ethers.getContractAt('YourContract', "0xaAC799eC2d00C013f1F11c37E654e59B0429DF6A") //<-- if you want to instantiate a version of a contract at a specific address!
+//const secondContract = await deploy("SecondContract")
 
-  // const exampleToken = await deploy("ExampleToken")
-  // const examplePriceOracle = await deploy("ExamplePriceOracle")
-  // const smartContractWallet = await deploy("SmartContractWallet",[exampleToken.address,examplePriceOracle.address])
+// const exampleToken = await deploy("ExampleToken")
+// const examplePriceOracle = await deploy("ExamplePriceOracle")
+// const smartContractWallet = await deploy("SmartContractWallet",[exampleToken.address,examplePriceOracle.address])
 
-  /*
+/*
   //If you want to send value to an address from the deployer
   const deployerWallet = ethers.provider.getSigner()
   await deployerWallet.sendTransaction({
@@ -49,14 +49,14 @@ This deploy script is no longer in use, but is left for reference purposes!
   })
   */
 
-  /*
+/*
   //If you want to send some ETH to a contract on deploy (make your constructor payable!)
   const yourContract = await deploy("YourContract", [], {
   value: ethers.utils.parseEther("0.05")
   });
   */
 
-  /*
+/*
   //If you want to link a library into your contract:
   // reference: https://github.com/austintgriffith/scaffold-eth/blob/using-libraries-example/packages/hardhat/scripts/deploy.js#L19
   const yourContract = await deploy("YourContract", [], {}, {
@@ -64,12 +64,11 @@ This deploy script is no longer in use, but is left for reference purposes!
   });
   */
 
-  console.log(
-    " 💾  Artifacts (address, abi, and args) saved to: ",
-    chalk.blue("packages/hardhat/artifacts/"),
-    "\n\n"
-  );
-};
+console.log(
+  " 💾  Artifacts (address, abi, and args) saved to: ",
+  chalk.blue("packages/hardhat/artifacts/"),
+  "\n\n"
+);
 
 const deploy = async (
   contractName,
@@ -156,7 +155,7 @@ const readArgsFile = (contractName) => {
 };
 
 function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 main()
