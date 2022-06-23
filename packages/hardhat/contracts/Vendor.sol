@@ -5,6 +5,15 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "./YourToken.sol";
 
 contract Vendor is Ownable {
+    // our erc20 token "YourToken.sol" contract
+    YourToken yourToken;
+
+    constructor(address tokenAddress) {
+        yourToken = YourToken(tokenAddress);
+    }
+
+    // token price
+    uint256 public constant tokensPerEth = 100;
     // Events
     event BuyTokens(address buyer, uint256 amountOfETH, uint256 amountOfTokens);
     event SellTokens(
@@ -12,23 +21,11 @@ contract Vendor is Ownable {
         uint256 amountOfETH,
         uint256 amountOfTokens
     );
-    // our erc20 token "YourToken.sol" contract
-    YourToken public yourToken;
 
-    // token price
-    uint256 public constant tokensPerEth = 100;
+    function buyTokens() external payable {
+        require(msg.value > 0, "You need to send some ETH");
 
-    constructor(address tokenAddress) {
-        yourToken = YourToken(tokenAddress);
-    }
-
-    // ToDo: create a payable buyTokens() function:
-    function buyTokens() public payable {
-        uint256 amountOfETH = msg.value;
-        require(amountOfETH > 0, "You need to send some ETH");
-
-        // Does the transferer have enough tokens?
-        uint256 amountOfTokens = amountOfETH * tokensPerEth;
+        uint256 amountOfTokens = msg.value * tokensPerEth;
         uint256 vendorBalance = yourToken.balanceOf(address(this));
         require(
             vendorBalance >= amountOfTokens,
@@ -36,15 +33,14 @@ contract Vendor is Ownable {
         );
 
         // Send tokens
-        address buyer = msg.sender;
-        bool success = yourToken.transfer(buyer, amountOfTokens);
+        bool success = yourToken.transfer(msg.sender, amountOfTokens);
         require(success, "Token transfer failed");
 
-        emit BuyTokens(buyer, amountOfETH, amountOfTokens);
+        emit BuyTokens(msg.sender, msg.value, amountOfTokens);
     }
 
     // ToDo: create a withdraw() function that lets the owner withdraw ETH
-    function withdraw() public onlyOwner {
+    function withdraw() external onlyOwner {
         uint256 vendorBalance = address(this).balance;
         require(vendorBalance > 0, "Vendor does not have any ETH to withdraw");
 
@@ -54,7 +50,7 @@ contract Vendor is Ownable {
     }
 
     // ToDo: create a sellTokens(uint256 _amount) function:
-    function sellTokens(uint256 amount) public {
+    function sellTokens(uint256 amount) external {
         // validate amount
         require(amount > 0, "Amount must be greater than 0");
 

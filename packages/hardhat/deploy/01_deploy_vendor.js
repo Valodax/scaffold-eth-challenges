@@ -31,27 +31,27 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
   await sleep(5000); // wait 5 seconds for transaction to propagate
 
   // ToDo: change address to your frontend address vvvv
-  // console.log("\n 🤹  Sending ownership to frontend address...\n")
+  console.log("\n 🤹  Sending ownership to frontend address...\n");
   const ownershipTransaction = await vendor.transferOwnership(
-    "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"
+    "0xd46fa5ec5eb13a0e1ff00e9bb602282cc2561a3e"
   );
-  // console.log("\n    ✅ confirming...\n");
-  // const ownershipResult = await ownershipTransaction.wait();
+  console.log("\n    ✅ confirming...\n");
+  const ownershipResult = await ownershipTransaction.wait(1);
 
-  // ToDo: Verify your contract with Etherscan for public chains
-  // if (chainId !== "31337") {
-  //   try {
-  //     console.log(" 🎫 Verifing Contract on Etherscan... ");
-  //     await sleep(5000); // wait 5 seconds for deployment to propagate
-  //     await run("verify:verify", {
-  //       address: vendor.address,
-  //       contract: "contracts/Vendor.sol:Vendor",
-  //       contractArguments: [yourToken.address],
-  //     });
-  //   } catch (e) {
-  //     console.log(" ⚠️ Failed to verify contract on Etherscan ");
-  //   }
-  // }
+  //ToDo: Verify your contract with Etherscan for public chains
+  if (chainId !== "31337") {
+    try {
+      console.log(" 🎫 Verifing Contract on Etherscan... ");
+      await sleep(5000); // wait 5 seconds for deployment to propagate
+      await run("verify:verify", {
+        address: vendor.address,
+        contract: "contracts/Vendor.sol:Vendor",
+        contractArguments: [yourToken.address],
+      });
+    } catch (e) {
+      console.log(" ⚠️ Failed to verify contract on Etherscan ");
+    }
+  }
 };
 
 function sleep(ms) {
